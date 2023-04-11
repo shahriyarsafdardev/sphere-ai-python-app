@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'sphere_ai_django_app',
+    'user',
     'corsheaders'
 ]
 

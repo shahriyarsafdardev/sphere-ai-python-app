@@ -1,6 +1,6 @@
 from django.urls import path
-from user.views.postgres_reference_api_view import postgres_search, postgres_references
-from user.views.hubspot_reference_api_view import hubspot_search, hubspot_references
+from .views.postgres_reference_api_view import postgres_search, postgres_references
+from .views.hubspot_reference_api_view import hubspot_search, hubspot_references
 
 urlpatterns = [
     path('postgres_references', postgres_references),
