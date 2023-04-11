@@ -1,0 +1,11 @@
+import uuid
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+
+class HubspotReference(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=120, null=False, default="")
+    hubspot_access_token = models.CharField(
+        max_length=255, null=False, default="")
+    environment = models.CharField(max_length=255, null=False, default="")
