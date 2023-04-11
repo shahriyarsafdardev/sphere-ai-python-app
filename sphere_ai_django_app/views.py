@@ -48,9 +48,9 @@ def postgres_search(request, id):
   return HttpResponse(response)
 
 @api_view(['GET'])
-def hubspot_search(request):
+def hubspot_search(request, id):
   query = request.GET.get('query')
-  access_token =  request.GET.get('hubspot_token')
+  access_token = HubspotReference.objects.get(pk=id).hubspot_access_token
   openai.api_key = os.environ['OPENAI_API_KEY']
   api_client = hubspot.Client.create(access_token=access_token)
   question = f"from given query please identify which HubSpot object user is requesting data from. Just give me a one word response query: {query}."
