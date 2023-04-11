@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from user.models.postgres_reference import PostgresReference
 from rest_framework.decorators import api_view
 from user.utils.postgres_utility import fetch_table_names, fetch_tables_schema, parsed_table_names, ask_gpt, execute_query
+from user.serializers.postgres_reference_serializer import PostgresReferenceSerializer
+from rest_framework.response import Response
 
 
 @api_view(['GET'])
@@ -17,3 +19,9 @@ def postgres_search(request, id):
     query_result = execute_query(id, parsed_query)
     response = [f"{row}\n" for row in query_result]
     return HttpResponse(response)
+
+@api_view(['GET'])
+def postgres_references(request):
+  data = PostgresReference.objects.all()
+  response_data = PostgresReferenceSerializer(data, many=True).data
+  return Response(response_data)
