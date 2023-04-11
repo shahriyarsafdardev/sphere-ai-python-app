@@ -23,8 +23,8 @@ def parsed_table_names(tables_prompt):
   raw_table_names = [f"'{table}'" for table in raw_table_names]
   return raw_table_names
 
-def execute_query(sql_query):
-  postgres_reference = PostgresReference.objects.all().first()
+def execute_query(postgres_reference_id, sql_query):
+  postgres_reference = PostgresReference.objects.get(pk=postgres_reference_id)
   connection = psycopg2.connect(
     host=postgres_reference.host,
     port=postgres_reference.port,
@@ -38,12 +38,12 @@ def execute_query(sql_query):
   connection.close()
   return results
 
-def fetch_tables_schema(table_names):
+def fetch_tables_schema(postgres_reference_id, table_names):
   sql = f"SELECT tc.table_name AS table, tc.column_name AS column FROM information_schema.columns AS tc LEFT JOIN information_schema.key_column_usage AS kcu ON tc.table_name = kcu.table_name AND tc.column_name = kcu.column_name LEFT JOIN information_schema.constraint_column_usage AS ccu ON kcu.constraint_name = ccu.constraint_name WHERE tc.table_name IN ({', '.join(map(str, table_names))}) ORDER BY tc.table_name, tc.ordinal_position;"
-  result = execute_query(sql)
+  result = execute_query(postgres_reference_id, sql)
   return str([row for row in result]).replace("', '", ": " ).replace("('", "").replace("')", "")
 
-def fetch_table_names():
+def fetch_table_names(postgres_reference_id):
   sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';"
-  result = execute_query(sql)
+  result = execute_query(postgres_reference_id, sql)
   return [row[0] for row in result]
