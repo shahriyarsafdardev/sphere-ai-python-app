@@ -1,3 +1,6 @@
 from django.contrib import admin
+from user.models.hubspot_reference import HubspotReference
+from user.models.postgres_reference import PostgresReference
 
-# Register your models here.
+admin.site.register(PostgresReference)
+admin.site.register(HubspotReference)

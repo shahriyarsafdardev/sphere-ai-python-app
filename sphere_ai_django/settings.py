@@ -60,8 +60,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-  "http://localhost:3001",
-  "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3000",
 ]
 
 ROOT_URLCONF = 'sphere_ai_django.urls'
@@ -91,10 +91,10 @@ WSGI_APPLICATION = 'sphere_ai_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sphere_ai_django', 
-        'USER': env('DATABASE_USER'), 
+        'NAME': 'sphere_ai_django',
+        'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': '127.0.0.1', 
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }

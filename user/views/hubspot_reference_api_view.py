@@ -8,6 +8,14 @@ import openai
 from user.serializers.hubspot_reference_serializer import HubspotReferenceSerializer
 from rest_framework.response import Response
 
+
+@api_view(['GET'])
+def hubspot_references(request):
+    data = HubspotReference.objects.all()
+    response_data = HubspotReferenceSerializer(data, many=True).data
+    return Response(response_data)
+
+
 @api_view(['GET'])
 def hubspot_search(request, id):
     query = request.GET.get('query')
@@ -23,9 +31,3 @@ def hubspot_search(request, id):
     body = get_filters_body(prompt)
     results = fetch_hubspot_object_results(object_type, access_token, body)
     return HttpResponse(results)
-
-@api_view(['GET'])
-def hubspot_references(request):
-  data = HubspotReference.objects.all()
-  response_data = HubspotReferenceSerializer(data, many=True).data
-  return Response(response_data)
