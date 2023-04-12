@@ -1,6 +1,7 @@
 import re
 import openai
 import psycopg2
+import psycopg2.extras
 import environ
 from user.models.postgres_reference import PostgresReference
 
@@ -28,7 +29,7 @@ def execute_query(postgres_reference_id, sql_query):
         password=postgres_reference.password,
         database=postgres_reference.db_name
     )
-    cursor = connection.cursor()
+    cursor = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cursor.execute(sql_query)
     results = cursor.fetchall()
     connection.close()
@@ -49,7 +50,7 @@ def fetch_tables_schema(postgres_reference_id, raw_query):
 def fetch_table_names(postgres_reference_id):
     sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';"
     result = execute_query(postgres_reference_id, sql)
-    return [row[0] for row in result]
+    return [row['table_name'] for row in result]
 
 
 def parsed_table_names(tables_prompt):
