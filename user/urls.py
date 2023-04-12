@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.postgres_reference_api_view import postgres_search, postgres_references
+from .views.postgres_reference_api_view import postgres_references, search as postgres_search
 from .views.hubspot_reference_api_view import hubspot_search, hubspot_references
 
 urlpatterns = [

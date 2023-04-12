@@ -1,15 +1,19 @@
 from user.models.postgres_reference import PostgresReference
-from rest_framework.decorators import api_view
-from user.utils.postgres_utility import fetch_table_names, fetch_tables_schema, parsed_table_names, ask_gpt, execute_query
+from rest_framework.decorators import api_view, permission_classes
+from user.utils.postgres_utility import fetch_tables_schema, ask_gpt, execute_query
 from user.serializers.postgres_reference_serializer import PostgresReferenceSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.status import HTTP_200_OK
+
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def postgres_references(request):
     data = PostgresReference.objects.all()
     response_data = PostgresReferenceSerializer(data, many=True).data
-    return Response(response_data)
+    return Response(response_data, status=HTTP_200_OK)
 
 
 @api_view(['GET'])
