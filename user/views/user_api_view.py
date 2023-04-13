@@ -1,5 +1,4 @@
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 from rest_framework import generics, permissions, status
 from user.models.user import User
