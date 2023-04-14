@@ -30,7 +30,7 @@ class HubspotReferencesView(generics.CreateAPIView):
 class HubspotSearchView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(request, id):
+    def get(self, request, id):
         try:
             query = request.GET.get('query')
             access_token = HubspotReference.objects.get(

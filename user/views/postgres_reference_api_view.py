@@ -29,7 +29,7 @@ class PostgresReferencesView(generics.CreateAPIView):
 class PostgresSearchView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(request, id):
+    def get(self, request, id):
         try:
             raw_query = request.GET.get('query')
             db_schema = fetch_tables_schema(id, raw_query)
