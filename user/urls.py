@@ -12,8 +12,8 @@ urlpatterns = [
     path('postgres_references/<str:id>/query/',
          PostgresSearchView.as_view(), name='postgres_search'),
     path('hubspot_references/',  HubspotReferencesView.as_view(),
-         name='Hubspot References'),
+         name='hubspot_references'),
     path('hubspot_references/<str:id>/query/',
-         HubspotSearchView.as_view(), name='Hubspot Search'),
-    path('documents/search', BingSearchView.as_view(), name='Bing Search')
+         HubspotSearchView.as_view(), name='hubspot_search'),
+    path('documents/search/', BingSearchView.as_view(), name='bing_search')
 ]

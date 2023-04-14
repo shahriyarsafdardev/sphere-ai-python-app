@@ -10,11 +10,21 @@ import os
 
 class HubspotReferencesView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = HubspotReferenceSerializer
 
     def get(self, request):
         data = HubspotReference.objects.all()
         response_data = HubspotReferenceSerializer(data, many=True).data
         return Response(response_data)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 class HubspotSearchView(generics.CreateAPIView):

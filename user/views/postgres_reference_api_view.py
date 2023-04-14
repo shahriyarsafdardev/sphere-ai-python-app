@@ -9,11 +9,21 @@ from rest_framework import status, generics, permissions
 
 class PostgresReferencesView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostgresReferenceSerializer
 
     def get(self, request):
         data = PostgresReference.objects.all()
         response_data = PostgresReferenceSerializer(data, many=True).data
         return Response(response_data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 class PostgresSearchView(generics.CreateAPIView):
