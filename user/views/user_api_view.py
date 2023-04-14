@@ -65,7 +65,7 @@ class UserGoogleLoginView(generics.CreateAPIView):
         except User.DoesNotExist:
             first_name, last_name = user_data['name'].split(' ')
             user = User.objects.create_user(
-                email=email, password='sphere-2340', first_name=first_name, last_name=last_name)
+                email=email, password=DEFAULT_PASSWORD, first_name=first_name, last_name=last_name)
         data = generate_auth_tokens(user)
         return Response(data, status=status.HTTP_200_OK)
 
