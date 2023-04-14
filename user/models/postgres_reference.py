@@ -12,3 +12,5 @@ class PostgresReference(models.Model):
     host = models.CharField(max_length=255, null=False)
     port = models.IntegerField(null=False)
     documentation = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
