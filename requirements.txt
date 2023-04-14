@@ -13,9 +13,12 @@ charset-normalizer==3.1.0
 dill==0.3.6
 Django==4.2
 django-cors-headers==3.14.0
+django-dotenv==1.4.2
 django-environ==0.10.0
 django-filter==23.1
 django-jsonfield==1.4.1
+django-otp==1.1.6
+django-rest-framework==0.1.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 environ==1.0
@@ -31,6 +34,7 @@ multidict==6.0.4
 openai==0.27.4
 outcome==1.2.0
 platformdirs==3.2.0
+psycopg==3.1.8
 psycopg2==2.9.6
 psycopg2-binary==2.9.6
 pycodestyle==2.10.0
@@ -38,6 +42,7 @@ PyJWT==2.6.0
 pylint==2.17.2
 pylint-django==2.5.3
 pylint-plugin-utils==0.7
+pyotp==2.8.0
 PyPDF2==3.0.1
 PySocks==1.7.1
 python-dateutil==2.8.2
