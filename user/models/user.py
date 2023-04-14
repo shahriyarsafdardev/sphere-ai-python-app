@@ -26,6 +26,9 @@ class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    otp_secret = models.CharField(null=True, blank=True, max_length=50)
+    otp_verified_at = models.DateTimeField(null=True, blank=True)
+    is_otp_enabled = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
