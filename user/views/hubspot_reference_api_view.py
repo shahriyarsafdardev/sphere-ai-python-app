@@ -21,13 +21,10 @@ class HubspotReferencesView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        name = serializer.validated_data.get('name')
-        hubspot_access_token = serializer.validated_data.get(
-            'hubspot_access_token')
-        environment = serializer.validated_data.get('environment')
-        hubspot_reference = HubspotReference.objects.create(
-            name=name, hubspot_access_token=hubspot_access_token, environment=environment)
-        return Response(HubspotReferenceSerializer(hubspot_reference).data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 class HubspotSearchView(generics.CreateAPIView):

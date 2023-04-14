@@ -20,15 +20,10 @@ class PostgresReferencesView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        title = serializer.validated_data.get('title')
-        db_name = serializer.validated_data.get('db_name')
-        db_user_name = serializer.validated_data.get('db_user_name')
-        host = serializer.validated_data.get('host')
-        port = serializer.validated_data.get('port')
-        password = serializer.validated_data.get('password')
-        postgres_reference = PostgresReference.objects.create(
-            title=title, db_name=db_name, db_user_name=db_user_name, host=host, port=port, password=password)
-        return Response(PostgresReferenceSerializer(postgres_reference).data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 class PostgresSearchView(generics.CreateAPIView):
