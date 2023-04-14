@@ -10,11 +10,24 @@ import os
 
 class HubspotReferencesView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = HubspotReferenceSerializer
 
     def get(self, request):
         data = HubspotReference.objects.all()
         response_data = HubspotReferenceSerializer(data, many=True).data
         return Response(response_data)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        name = serializer.validated_data.get('name')
+        hubspot_access_token = serializer.validated_data.get(
+            'hubspot_access_token')
+        environment = serializer.validated_data.get('environment')
+        hubspot_reference = HubspotReference.objects.create(
+            name=name, hubspot_access_token=hubspot_access_token, environment=environment)
+        return Response(HubspotReferenceSerializer(hubspot_reference).data, status=status.HTTP_201_CREATED)
 
 
 class HubspotSearchView(generics.CreateAPIView):
